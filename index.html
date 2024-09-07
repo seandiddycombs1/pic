@@ -10,3 +10,27 @@ Play a Music
 </p>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Self Learning HTML</title>
+  </head>
+  <body>
+    <h1>To learn HTML we need to remember below tags</h1>
+    <ol>
+      <li>html</li>
+      <li>body</li>
+    </ol>
+    
+    <h2>Audio Player</h2>
+    <audio id="myAudio" src="spotifydown.com - Supernatural.mp3"></audio>
+    <button onclick="playAudio()">Play Audio</button>
+
+    <script>
+      function playAudio() {
+        var audio = document.getElementById("myAudio");
+        audio.play();
+      }
+    </script>
+  </body>
+</html>
