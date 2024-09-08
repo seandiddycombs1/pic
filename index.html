@@ -2,6 +2,23 @@
 <html lang="en">
   <head>
     <title>Self Learning HTML</title>
+    <style>
+      .audio-controls {
+        margin-top: 10px;
+      }
+      .volume-control {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+      }
+      .volume-control label {
+        margin-right: 10px;
+      }
+      #debug {
+        margin-top: 20px;
+        color: red;
+      }
+    </style>
   </head>
   <body>
     <h1>To learn HTML we need to remember below tags</h1>
@@ -11,24 +28,64 @@
     </ol>
     
     <h2>Audio Player</h2>
-    <audio id="myAudio" src="spotifydown.com - Supernatural.mp3"></audio>
-    <button onclick="playAudio()">Play Audio</button>
+    <audio id="myAudio">
+      <source src="spotifydown.com - Supernatural.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <div class="audio-controls">
+      <button onclick="playAudio()">Play Audio</button>
       <button onclick="pauseAudio()">Pause Audio</button>
       <button onclick="stopAudio()">Stop Audio</button>
+    </div>
+    <div class="volume-control">
+      <label for="volumeControl">Volume:</label>
+      <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="1" oninput="adjustVolume()">
+    </div>
+    <img src="Bike.jpg" alt="A bike" width="300" height="auto">
+    <div id="debug"></div>
+    
     <script>
-      function playAudio() {
-        var audio = document.getElementById("myAudio");
-        audio.play();
-      }
       const audio = document.getElementById("myAudio");
+      const volumeControl = document.getElementById("volumeControl");
+      const debugElement = document.getElementById("debug");
+
+      function playAudio() {
+        audio.play().then(() => {
+          debugElement.textContent = "Audio playing successfully";
+        }).catch(e => {
+          console.error("Error playing audio:", e);
+          debugElement.textContent = "Error playing audio: " + e.message;
+        });
+      }
+
       function pauseAudio() {
         audio.pause();
-     }
+        debugElement.textContent = "Audio paused";
+      }
 
       function stopAudio() {
         audio.pause();
         audio.currentTime = 0;
-     }
+        debugElement.textContent = "Audio stopped";
+      }
+
+      function adjustVolume() {
+        audio.volume = volumeControl.value;
+        debugElement.textContent = "Volume adjusted to " + (volumeControl.value * 100) + "%";
+      }
+
+      // Initialize volume
+      adjustVolume();
+
+      // Check if audio file is loaded
+      audio.addEventListener('loadeddata', () => {
+        debugElement.textContent = "Audio file loaded successfully";
+      });
+
+      audio.addEventListener('error', (e) => {
+        console.error("Error loading audio file:", e);
+        debugElement.textContent = "Error loading audio file: " + e.message;
+      });
     </script>
   </body>
 </html>
