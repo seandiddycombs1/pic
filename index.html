@@ -13,12 +13,22 @@
     <h2>Audio Player</h2>
     <audio id="myAudio" src="spotifydown.com - Supernatural.mp3"></audio>
     <button onclick="playAudio()">Play Audio</button>
-
+      <button onclick="pauseAudio()">Pause Audio</button>
+      <button onclick="stopAudio()">Stop Audio</button>
     <script>
       function playAudio() {
         var audio = document.getElementById("myAudio");
         audio.play();
       }
+      const audio = document.getElementById("myAudio");
+      function pauseAudio() {
+        audio.pause();
+     }
+
+      function stopAudio() {
+        audio.pause();
+        audio.currentTime = 0;
+     }
     </script>
   </body>
 </html>
