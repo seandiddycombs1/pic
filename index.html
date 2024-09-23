@@ -6,12 +6,12 @@
       .audio-controls {
         margin-top: 10px;
       }
-      .volume-control {
+      .volume-control, .seek-control {
         display: flex;
         align-items: center;
         margin-top: 10px;
       }
-      .volume-control label {
+      .volume-control label, .seek-control label {
         margin-right: 10px;
       }
       #debug {
@@ -24,6 +24,7 @@
         background-color: #f0f0f0;
         margin-top: 10px;
         position: relative;
+        cursor: pointer;
       }
       #progressBar {
         width: 0;
@@ -40,6 +41,9 @@
         font-size: 12px;
         line-height: 20px;
       }
+      #seekSlider {
+        width: 300px;
+      }
     </style>
   </head>
   <body>
@@ -54,7 +58,7 @@
     
     <h2>Audio Player</h2>
     <audio id="myAudio">
-      <source src="spotifydown.com - Lucky Girl Syndrome.mp3" type="audio/mpeg">
+      <source src="Supernatural.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
     <div class="audio-controls">
@@ -66,11 +70,15 @@
       <label for="volumeControl">Volume:</label>
       <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="1" oninput="adjustVolume()">
     </div>
-    <div class="progress-container">
+    <div class="progress-container" id="progressContainer">
       <div id="progressBar"></div>
       <div id="progressTime">0:00 / 0:00</div>
     </div>
-    <img src="supernatural.png" alt="Bike" width="300" height="auto">
+    <div class="seek-control">
+      <label for="seekSlider">Seek:</label>
+      <input type="range" id="seekSlider" min="0" max="100" value="0" step="0.1">
+    </div>
+    <img src="Bike.jpg" alt="A bike" width="300" height="auto">
     <div id="debug"></div>
     
     <script>
@@ -79,6 +87,8 @@
       const debugElement = document.getElementById("debug");
       const progressBar = document.getElementById("progressBar");
       const progressTime = document.getElementById("progressTime");
+      const seekSlider = document.getElementById("seekSlider");
+      const progressContainer = document.getElementById("progressContainer");
 
       function playAudio() {
         audio.play().then(() => {
@@ -110,17 +120,24 @@
       function formatTime(seconds) {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = Math.floor(seconds % 60);
-        return ${minutes}:${remainingSeconds.toString().padStart(2, '0')};
+        return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
       }
 
       function updateProgress() {
         const progress = (audio.currentTime / audio.duration) * 100;
-        progressBar.style.width = ${progress}%;
-        progressTime.textContent = ${formatTime(audio.currentTime)} / ${formatTime(audio.duration)};
+        progressBar.style.width = `${progress}%`;
+        progressTime.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+        seekSlider.value = progress;
 
         if (!audio.paused) {
           requestAnimationFrame(updateProgress);
         }
+      }
+
+      function seek() {
+        const seekTime = (seekSlider.value / 100) * audio.duration;
+        audio.currentTime = seekTime;
+        updateProgress();
       }
 
       // Initialize volume
@@ -139,6 +156,16 @@
 
       // Update progress when seeking
       audio.addEventListener('seeked', updateProgress);
+
+      // Seek functionality
+      seekSlider.addEventListener('input', seek);
+
+      // Click on progress bar to seek
+      progressContainer.addEventListener('click', function(e) {
+        const clickPosition = (e.offsetX / this.offsetWidth) * audio.duration;
+        audio.currentTime = clickPosition;
+        updateProgress();
+      });
     </script>
-  </body>
+  </body>
 </html>
