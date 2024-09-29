@@ -44,6 +44,13 @@
       #seekSlider {
         width: 300px;
       }
+      .video-container {
+        margin-top: 20px;
+        display: none;
+      }
+      #youtubeVideo, #mp4Video {
+        max-width: 100%;
+      }
     </style>
   </head>
   <body>
@@ -80,7 +87,20 @@
     </div>
     <img src="miyeon.jpg" alt="miyeon" width="600" height="auto">
     <div id="debug"></div>
+    <h2>Video Players</h2>
+    <button onclick="showYouTubeVideo()">Play YouTube Video</button>
+    <button onclick="showMP4Video()">Play MP4 Video</button>
     
+    <div id="youtubeContainer" class="video-container">
+      <iframe id="youtubeVideo" width="560" height="315" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    
+    <div id="mp4Container" class="video-container">
+      <video id="mp4Video" width="560" height="315" controls>
+        <source src="FatSong.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
     <script>
       const audio = document.getElementById("myAudio");
       const volumeControl = document.getElementById("volumeControl");
@@ -166,6 +186,29 @@
         audio.currentTime = clickPosition;
         updateProgress();
       });
+      function showYouTubeVideo() {
+        const youtubeContainer = document.getElementById('youtubeContainer');
+        const youtubeVideo = document.getElementById('youtubeVideo');
+        const mp4Container = document.getElementById('mp4Container');
+
+        // Replace 'VIDEO_ID' with the actual YouTube video ID you want to play
+        youtubeVideo.src = 'https://www.youtube.com/embed/TqGeM9T6gwI?autoplay=1';
+        youtubeContainer.style.display = 'block';
+        mp4Container.style.display = 'none';
+      }
+ 
+      function showMP4Video() {
+        const youtubeContainer = document.getElementById('youtubeContainer');
+        const mp4Container = document.getElementById('mp4Container');
+        const mp4Video = document.getElementById('mp4Video');
+
+        mp4Container.style.display = 'block';
+        youtubeContainer.style.display = 'none';
+        mp4Video.play().catch(e => {
+          console.error("Error playing MP4 video:", e);
+          // Handle the error (e.g., show an error message to the user)
+        });
+      }
     </script>
   </body>
 </html>
