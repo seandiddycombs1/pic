@@ -196,17 +196,7 @@
         audio.currentTime = clickPosition;
         updateProgress();
       });
-      function showYouTubeVideo() {
-        const youtubeContainer = document.getElementById('youtubeContainer');
-        const youtubeVideo = document.getElementById('youtubeVideo');
-        const mp4Container = document.getElementById('mp4Container');
-
-        // Replace 'VIDEO_ID' with the actual YouTube video ID you want to play
-        youtubeVideo.src = 'https://www.youtube.com/embed/d3y0rCNveFd2n9pU?autoplay=1';
-        youtubeContainer.style.display = 'block';
-        mp4Container.style.display = 'none';
-      }
- 
+      
       function showMP4Video() {
         const youtubeContainer = document.getElementById('youtubeContainer');
         const mp4Container = document.getElementById('mp4Container');
@@ -220,15 +210,14 @@
         });
       }
       function showYouTubeVideo1() {
-        const youtubeContainer1 = document.getElementById('youtubeContainer1');
-        const youtubeVideo1 = document.getElementById('youtubeVideo1');
-        const youtubeContainer2 = document.getElementById('youtubeContainer2');
+        const youtubeContainer = document.getElementById('youtubeContainer');
+        const youtubeVideo = document.getElementById('youtubeVideo');
+        const mp4Container = document.getElementById('mp4Container');
 
-        // Replace 'VIDEO_ID_1' with the actual YouTube video ID you want to play
-        youtubeVideo1.src = 'https://www.youtube.com/embed/bCFgJGePm0U?autoplay=1';
-        youtubeContainer1.style.display = 'block';
-        youtubeContainer2.style.display = 'none';
-      }
+        youtubeVideo.src = 'https://www.youtube.com/embed/TqGeM9T6gwI?autoplay=1';
+        youtubeContainer.style.display = 'block';
+        mp4Container.style.display = 'none';
+      }
  
       function showYouTubeVideo2() {
         const youtubeContainer1 = document.getElementById('youtubeContainer1');
